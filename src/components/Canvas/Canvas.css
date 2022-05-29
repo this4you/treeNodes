@@ -1,0 +1,33 @@
+.canvas-container {
+    position:relative;
+}
+
+.node {
+    position: absolute;
+    top: 300px;
+    background-color: #629f6c;
+    width: 100px;
+    height: 150px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border: 3px solid #617c6e;
+}
+
+.input {
+    margin-top: -14px;
+}
+
+.node-point {
+    width: 30px;
+    height: 30px;
+    background-color: #8bef8e;
+    border-radius: 20px;
+    border: 3px solid #617c6e;
+}
+
+.output {
+    margin-bottom: -14px;
+}
