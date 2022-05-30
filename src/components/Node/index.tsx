@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 
-const Node: React.FC<{ setInputCord, setIsActive, isActive }> = ({ setInputCord, setIsActive, isActive}) => {
-    
+const Node: React.FC<{ setInputCord, onNodeSelect, onRelatedSelect, isActive }> = ({ setInputCord, onNodeSelect, onRelatedSelect, isActive }) => {
+
     const ref = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
@@ -17,7 +17,7 @@ const Node: React.FC<{ setInputCord, setIsActive, isActive }> = ({ setInputCord,
             function moveAt(pageX, pageY) {
                 node.style.left = pageX - shiftX + 'px';
                 node.style.top = pageY - shiftY + 'px';
-                setInputCord(ref.current.offsetLeft + 52, ref.current.offsetTop)
+                setInputCord(ref.current.offsetLeft + (node.offsetWidth / 2), ref.current.offsetTop)
             }
 
             function onMouseMove(event) {
@@ -38,9 +38,9 @@ const Node: React.FC<{ setInputCord, setIsActive, isActive }> = ({ setInputCord,
 
 
     return (
-        <div ref={ref} onMouseDownCapture={setIsActive} className="node">
-            <div className={"input node-point " + (isActive ? "node-active" : "")} />
-            <div className="output node-point" />
+        <div ref={ref} onClick={(e) => { e.stopPropagation(); }} className="node">
+            <div onMouseDownCapture={onNodeSelect} className={"input node-point " + (isActive ? "node-active" : "")} />
+            <div onMouseDownCapture={onRelatedSelect} className="output node-point" />
         </div>
     );
 }
