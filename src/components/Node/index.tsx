@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from "react";
 
-const Node: React.FC<{ setInputCord, id }> = ({ setInputCord, id }) => {
+const Node: React.FC<{ setInputCord, setIsActive, isActive }> = ({ setInputCord, setIsActive, isActive}) => {
+    
     const ref = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
@@ -16,7 +17,7 @@ const Node: React.FC<{ setInputCord, id }> = ({ setInputCord, id }) => {
             function moveAt(pageX, pageY) {
                 node.style.left = pageX - shiftX + 'px';
                 node.style.top = pageY - shiftY + 'px';
-                setInputCord(id, ref.current.offsetLeft + 52, ref.current.offsetTop)
+                setInputCord(ref.current.offsetLeft + 52, ref.current.offsetTop)
             }
 
             function onMouseMove(event) {
@@ -37,8 +38,8 @@ const Node: React.FC<{ setInputCord, id }> = ({ setInputCord, id }) => {
 
 
     return (
-        <div ref={ref} className="node">
-            <div className="input node-point" />
+        <div ref={ref} onMouseDownCapture={setIsActive} className="node">
+            <div className={"input node-point " + (isActive ? "node-active" : "")} />
             <div className="output node-point" />
         </div>
     );

@@ -13,7 +13,7 @@ type NodeType = {
 const Canvas = props => {
 
   const canvasRef = useRef(null);
-  
+
   const [nodes, setNodes] = useState([]);
 
   const onAddNodeHandler = () => {
@@ -27,21 +27,35 @@ const Canvas = props => {
     }]);
   }
 
-  const setNodeCordinates = useCallback((nodeId: number, x, y) => {
-    console.log(nodes.length);
-    const newArray = nodes.map(n => {
-      if (n.id === nodeId) {
-        return {
-          ...n, cordinates: {
-            x: x,
-            y: y
+  const setNodeCordinates = (nodeId: number) => {
+    return (x, y) => {
+      const newArray = nodes.map(n => {
+        if (n.id === nodeId) {
+          return {
+            ...n, cordinates: {
+              x: x,
+              y: y
+            }
           }
         }
-      }
-      return n;
-    });
-    setNodes([...newArray])
-  }, [nodes])
+        return n;
+      });
+      setNodes(newArray)
+    }
+  }
+
+  const setIsActive = (nodeId: number) => {
+    return () => {
+      const newArray = nodes.map(n => {
+        return { ...n, isActive: n.id === nodeId }
+      });
+      setNodes([...newArray])
+    }
+  }
+
+  const onNodeClickHandler = (event) => {
+
+  }
 
 
   useEffect(() => {
@@ -65,7 +79,7 @@ const Canvas = props => {
     <>
       <button onClick={onAddNodeHandler}>AddNewNode</button>
       <div className="canvas-container">
-        {nodes.map((n) => <Node key={n.id} id={n.id} setInputCord={setNodeCordinates} />)}
+        {nodes.map((n) => <Node setIsActive={setIsActive(n.id)} key={n.id} isActive={n.isActive} setInputCord={setNodeCordinates(n.id)} />)}
         <canvas width="1000px" height="800px" ref={canvasRef} />
       </div>
     </>

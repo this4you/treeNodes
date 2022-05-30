@@ -28,3 +28,7 @@
 .output {
     margin-bottom: -14px;
 }
+
+.node-active {
+    background-color: #ef8b8b;
+}
