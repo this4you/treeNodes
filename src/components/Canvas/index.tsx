@@ -29,6 +29,7 @@ const Canvas = props => {
   return (
     <div className="canvas-container">
       <Node setInputCord={setInputCord} />
+      <Node setInputCord={setInputCord} />
       <canvas width="1000px" height="800px" ref={canvasRef} />
     </div>
   )
@@ -41,7 +42,35 @@ const Node: React.FC<{ setInputCord }> = React.memo(({ setInputCord }) => {
 
   useEffect(() => {
     setPosition();
-  }, [])
+    const ball = ref.current;
+    ball.onmousedown = function (event) {
+      let shiftX = event.clientX - ball.getBoundingClientRect().left;
+      let shiftY = event.clientY - ball.getBoundingClientRect().top;
+      ball.style.zIndex = '1000';
+
+      moveAt(event.pageX, event.pageY);
+
+      function moveAt(pageX, pageY) {
+        ball.style.left = pageX - shiftX + 'px';
+        ball.style.top = pageY - shiftY + 'px';
+        setPosition();
+      }
+
+      function onMouseMove(event) {
+        moveAt(event.pageX, event.pageY);
+      }
+
+      document.addEventListener('mousemove', onMouseMove);
+
+      ball.onmouseup = function () {
+        document.removeEventListener('mousemove', onMouseMove);
+        ball.onmouseup = null;
+      };
+    }
+    ball.ondragstart = function () {
+      return false;
+    };
+  }, []);
 
   const setPosition = () => {
     if (ref.current) {
@@ -49,30 +78,12 @@ const Node: React.FC<{ setInputCord }> = React.memo(({ setInputCord }) => {
         x: ref.current.offsetLeft + 52,
         y: ref.current.offsetTop
       })
-      ref.current.ondragstart = () => {
-        return false;
-      }
     }
   }
 
-  const onMouseDownHandler = (event) => {
-    const node = event.target;
-    node.style.left = event.pageX - node.offsetWidth / 2 + 'px';
-    node.style.top = event.pageY - node.offsetHeight / 2 + 'px';
-    setPosition();
-    document.addEventListener('mousemove', onMouseDownHandler)
-  }
-
-  const onMouseUpHandler = () => {
-    // setInputCord({
-    //   x: ref.current.offsetLeft,
-    //   y: ref.current.offsetTop
-    // })
-    document.removeEventListener('mousemove', onMouseDownHandler);
-  }
 
   return (
-    <div ref={ref} className="node" onMouseDown={onMouseDownHandler} onMouseUp={onMouseUpHandler}>
+    <div ref={ref} className="node">
       <div className="input node-point" />
       <div className="output node-point" />
     </div>
