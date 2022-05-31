@@ -1,12 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import './Canvas.css';
-import { nodeWrapper} from '../nodeWrapper/index';
-import {nodesTreeWrapper} from '../nodesTreeWrapper/index'
 import TreeNode from '../TreeNode';
+import { leaf, tree } from '../../hocs';
 
 
-const TreeNodeWrapped = nodeWrapper(TreeNode);
-const NodesTreeWrapped = nodesTreeWrapper(TreeNodeWrapped);
+const TreeNodeWrapped = leaf(TreeNode);
+const NodesTreeWrapped = tree(TreeNodeWrapped);
 
 const Canvas = props => {
   return (

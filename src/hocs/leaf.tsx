@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 
 
-export const nodeWrapper = NodeComponent => function NodeWrapper({ setInputCord, onNodeSelect, onRelatedSelect, isActive }) {
+export const leaf = NodeComponent => function ({ setInputCord, onNodeSelect, onRelatedSelect, isActive }) {
     const ref = useRef<HTMLInputElement>(null);
 
     useEffect(() => {

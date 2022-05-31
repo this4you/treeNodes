@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 
-export const nodesTreeWrapper = NodeComponent => function() {
+export const tree = NodeComponent => function() {
   const canvasRef = useRef(null);
 
   const [nodes, setNodes] = useState([]);
