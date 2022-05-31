@@ -1,6 +1,20 @@
 import React, { useRef, useEffect } from "react";
+type NodeType = {
+    id: number,
+    cordinates: { x: number, y: number },
+    relatedNodeId?: number,
+};
 
-const Node: React.FC<{ setInputCord, onNodeSelect, onRelatedSelect, isActive }> = ({ setInputCord, onNodeSelect, onRelatedSelect, isActive }) => {
+const TreeNode = ({onNodeSelect, onRelatedSelect, isActive}) => {
+    return (
+        <div className="node">
+            <div onMouseDownCapture={onNodeSelect} className={"input node-point " + (isActive ? "node-active" : "")} />
+            <div onMouseDownCapture={onRelatedSelect} className="output node-point" />
+        </div>
+    );
+}
+
+const TreeNodeOld = ({ setInputCord, onNodeSelect, onRelatedSelect, isActive }) => {
 
     const ref = useRef<HTMLInputElement>(null);
 
@@ -45,4 +59,4 @@ const Node: React.FC<{ setInputCord, onNodeSelect, onRelatedSelect, isActive }> 
     );
 }
 
-export default Node;
+export default TreeNode;
