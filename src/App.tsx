@@ -1,11 +1,16 @@
 import React, { useEffect, useRef } from 'react';
-import { Canvas } from './components';
+import { TreeNode } from './components';
 import './App.css';
+import { leaf, tree } from './hocs';
+
+
+const TreeNodeWrapped = leaf(TreeNode);
+const NodesTreeWrapped = tree(TreeNodeWrapped);
 
 function App() {
   return (
     <div className="wrapp">
-      <Canvas></Canvas>
+        <NodesTreeWrapped></NodesTreeWrapped>
     </div>
   )
 }
