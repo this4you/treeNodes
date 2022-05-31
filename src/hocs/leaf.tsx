@@ -5,7 +5,6 @@ export const leaf = NodeComponent => function ({ setInputCord, onNodeSelect, onR
     const ref = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
-        // setPosition();
         const node = ref.current;
         node.onmousedown = function (event) {
             let shiftX = event.clientX - node.getBoundingClientRect().left;

@@ -1,11 +1,27 @@
 import React, { useRef, useState, useEffect } from "react";
 
-export const tree = NodeComponent => function() {
-  
+export const tree = NodeComponent => function ({ canvasConfig = { width: 1500, height: 800 }, initNodes = [] }) {
   const canvasRef = useRef(null);
 
   const [nodes, setNodes] = useState([]);
   const [activeNode, setActiveNode] = useState(null);
+
+  useEffect(() => {
+    drawLines();
+  }, [nodes])
+
+  useEffect(() => {
+    const newArray = [...nodes];
+    initNodes.forEach(n => {
+      const nodeIndex = newArray.findIndex((i) => i.id == n.id);
+      if (nodeIndex !== -1) {
+        newArray[nodeIndex] = { ...newArray[nodeIndex], ...n };
+      } else {
+        newArray.push(n);
+      }
+    })
+    setNodes(newArray);
+  }, [initNodes])
 
   const onAddNodeHandler = () => {
     setNodes([...nodes, {
@@ -33,11 +49,6 @@ export const tree = NodeComponent => function() {
       setNodes(newArray)
     }
   }
-
-
-  useEffect(() => {
-    drawLines();
-  }, [nodes])
 
   const drawLines = () => {
     const canvas = canvasRef.current
@@ -87,16 +98,17 @@ export const tree = NodeComponent => function() {
 
   return (
     <>
-      <button onClick={onAddNodeHandler}>AddNewNode</button>
+      {/* <button onClick={onAddNodeHandler}>AddNewNode</button> */}
       <div className="canvas-container" onClick={onCanvasClickHandler}>
-        {/* {nodes.map((n) => <NodeWrappComponent onRelatedSelect={() => onRelatedSelectHandler(n.id)} onNodeSelect={() => onNodeSelectHandler(n.id)} key={n.id} isActive={n.id === activeNode} setInputCord={setNodeCordinates(n.id)} />)} */}
         {nodes.map((n) =>
-          <NodeComponent onRelatedSelect={() => onRelatedSelectHandler(n.id)}
+          <NodeComponent
+            onRelatedSelect={() => onRelatedSelectHandler(n.id)}
             onNodeSelect={() => onNodeSelectHandler(n.id)}
-            key={n.id} isActive={n.id === activeNode}
+            key={n.id}
+            isActive={n.id === activeNode}
             setInputCord={setNodeCordinates(n.id)} />)
         }
-        <canvas width="1000px" height="800px" ref={canvasRef} />
+        <canvas width={canvasConfig.width} height={canvasConfig.height} ref={canvasRef} />
       </div>
     </>
   )

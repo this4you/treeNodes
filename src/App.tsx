@@ -6,11 +6,26 @@ import { leaf, tree } from './hocs';
 
 const TreeNodeWrapped = leaf(TreeNode);
 const NodesTreeWrapped = tree(TreeNodeWrapped);
+const canvasConfig = {
+  width: 1900,
+  height: 900
+};
+
+
+
 
 function App() {
+  const [nodes, setNodes] = React.useState([]);
+  const onAddNodeHandler = () => {
+    setNodes([...nodes, {
+      id: Number(new Date())
+    }]);
+  }
+
   return (
     <div className="wrapp">
-        <NodesTreeWrapped></NodesTreeWrapped>
+      <button onClick={onAddNodeHandler}>AddNewNode</button>
+      <NodesTreeWrapped initNodes={nodes} canvasConfig={canvasConfig}></NodesTreeWrapped>
     </div>
   )
 }
