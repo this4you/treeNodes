@@ -23,15 +23,6 @@ export const tree = NodeComponent => function ({ canvasConfig = { width: 1500, h
     setNodes(newArray);
   }, [initNodes])
 
-  const onAddNodeHandler = () => {
-    setNodes([...nodes, {
-      id: Number(new Date()),
-      cordinates: {
-        x: 0,
-        y: 0
-      }
-    }]);
-  }
 
   const setNodeCordinates = (nodeId: number) => {
     return (x, y) => {
@@ -98,7 +89,6 @@ export const tree = NodeComponent => function ({ canvasConfig = { width: 1500, h
 
   return (
     <>
-      {/* <button onClick={onAddNodeHandler}>AddNewNode</button> */}
       <div className="canvas-container" onClick={onCanvasClickHandler}>
         {nodes.map((n) =>
           <NodeComponent
