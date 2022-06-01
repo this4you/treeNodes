@@ -96,7 +96,9 @@ export const tree = NodeComponent => function ({ canvasConfig = { width: 1500, h
             onNodeSelect={() => onNodeSelectHandler(n.id)}
             key={n.id}
             isActive={n.id === activeNode}
-            setInputCord={setNodeCordinates(n.id)} />)
+            setInputCord={setNodeCordinates(n.id)}
+            {...n}
+            />)
         }
         <canvas width={canvasConfig.width} height={canvasConfig.height} ref={canvasRef} />
       </div>

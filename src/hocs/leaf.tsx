@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 
 
-export const leaf = NodeComponent => function ({ setInputCord, onNodeSelect, onRelatedSelect, isActive }) {
+export const leaf = NodeComponent => function ({ setInputCord, onNodeSelect, onRelatedSelect, isActive, ...rest }) {
     const ref = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
@@ -38,7 +38,12 @@ export const leaf = NodeComponent => function ({ setInputCord, onNodeSelect, onR
 
     return (
         <div ref={ref} onClick={(e) => { e.stopPropagation(); }} className="absolute-node">
-            <NodeComponent onNodeSelect={onNodeSelect} onRelatedSelect={onRelatedSelect} isActive= {isActive} />
+            <NodeComponent
+                onNodeSelect={onNodeSelect}
+                onRelatedSelect={onRelatedSelect}
+                isActive={isActive}
+                {...rest}
+            />
         </div>
-    );   
+    );
 }
