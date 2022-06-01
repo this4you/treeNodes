@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from 'react';
-import { TreeNode } from './components';
+import { TreeNode, TreeNodeV2 } from './components';
 import './App.css';
 import { leaf, tree } from './hocs';
 
 
-const TreeNodeWrapped = leaf(TreeNode);
+const TreeNodeWrapped = leaf(TreeNodeV2);
 const NodesTreeWrapped = tree(TreeNodeWrapped);
 const canvasConfig = {
   width: 1900,
