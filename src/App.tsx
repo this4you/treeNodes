@@ -1,5 +1,4 @@
-import React, { useEffect, useRef } from 'react';
-import { TreeNode} from './components';
+import React from 'react';
 import './App.css';
 import { AvatarsContainer, NodesContainer } from './containers';
 

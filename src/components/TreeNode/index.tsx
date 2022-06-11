@@ -1,9 +1,4 @@
-import React, { useRef, useEffect } from "react";
-type NodeType = {
-    id: number,
-    cordinates: { x: number, y: number },
-    relatedNodeId?: number,
-};
+import React from "react";
 
 const TreeNode = ({onNodeSelect, onRelatedSelect, isActive}) => {
     return (

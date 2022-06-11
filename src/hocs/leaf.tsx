@@ -1,6 +1,13 @@
 import { useRef, useEffect } from "react";
 
 
+function getInputCordinates(node, classname) {
+    return {
+        x: node.offsetLeft + node.querySelector(`.${classname}`).offsetLeft + node.querySelector(`.${classname}`).offsetWidth / 2,
+        y: node.querySelector(`.${classname}`).offsetTop + node.offsetTop
+    }
+}
+
 export const leaf = NodeComponent => function ({ setInputCord, onNodeSelect, onRelatedSelect, isActive, ...rest }) {
     const ref = useRef<HTMLInputElement>(null);
 
@@ -16,7 +23,9 @@ export const leaf = NodeComponent => function ({ setInputCord, onNodeSelect, onR
             function moveAt(pageX, pageY) {
                 node.style.left = pageX - shiftX + 'px';
                 node.style.top = pageY - shiftY + 'px';
-                setInputCord(node.offsetLeft + (node.offsetWidth / 2), node.offsetTop)
+                const inputCordinates = getInputCordinates(node, 'input');
+                const outputCordinates = getInputCordinates(node, 'output');
+                setInputCord(inputCordinates.x, inputCordinates.y, outputCordinates.x, outputCordinates.y);
             }
 
             function onMouseMove(event) {

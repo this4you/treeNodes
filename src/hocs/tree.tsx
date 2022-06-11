@@ -13,7 +13,7 @@ export const tree = NodeComponent => function ({ canvasConfig = { width: 1500, h
     useEffect(() => {
         const newArray = [...nodes];
         initNodes.forEach(n => {
-            const nodeIndex = newArray.findIndex((i) => i.id == n.id);
+            const nodeIndex = newArray.findIndex((i) => i.id === n.id);
             if (nodeIndex !== -1) {
                 newArray[nodeIndex] = { ...newArray[nodeIndex], ...n };
             } else {
@@ -25,13 +25,15 @@ export const tree = NodeComponent => function ({ canvasConfig = { width: 1500, h
 
 
     const setNodeCordinates = (nodeId: number) => {
-        return (x, y) => {
+        return (ix, iy, ox, oy) => {
             const newArray = nodes.map(n => {
                 if (n.id === nodeId) {
                     return {
                         ...n, cordinates: {
-                            x: x,
-                            y: y
+                            ix,
+                            iy,
+                            ox,
+                            oy
                         }
                     }
                 }
@@ -50,11 +52,11 @@ export const tree = NodeComponent => function ({ canvasConfig = { width: 1500, h
         nodes.forEach(({ cordinates, relatedNodeId }) => {
             if (relatedNodeId) {
                 const relatedNode = nodes.find(n => n.id === relatedNodeId);
-                const relX = relatedNode.cordinates.x;
-                const relY = relatedNode.cordinates.y + 120;
+                const relX = relatedNode.cordinates.ox;
+                const relY = relatedNode.cordinates.oy;
                 ctx.beginPath();
                 ctx.moveTo(relX, relY);
-                ctx.bezierCurveTo(relX, relY, relX, relY, cordinates.x, cordinates.y);
+                ctx.bezierCurveTo(relX, relY, relX, relY, cordinates.ix, cordinates.iy);
                 ctx.stroke();
             }
         })
