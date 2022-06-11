@@ -1,1 +1,2 @@
-export {default as AvatarsContainer} from './Avatars';
+export {default as AvatarsContainer} from './AvatarsContainer';
+export {default as NodesContainer} from './NodesContainer';
